@@ -1,0 +1,508 @@
+/* ============================================
+   SIMPLIFICADOR BOOLEANO - ESTILOS MEJORADOS
+   ============================================ */
+
+/* --- Variables de Color --- */
+
+:root {
+    /* Paleta personalizada Borgoña/Vino */
+    --bg-primary: #401010;
+    --bg-gradient-start: #401010;
+    --bg-gradient-end: #401010;
+    --container-bg: #F5F5F5;
+    --input-bg: #FFFFFF;
+    --input-border: #e2e8f0;
+    --input-focus: #401010;
+    --btn-bg: #401010;
+    --btn-hover: #6a1a1a;
+    --result-bg: #FFFFFF;
+    --result-border: #e2e8f0;
+    --text-primary: #505050;
+    --text-secondary: #401010;
+    --header-color: #401010;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --success-color: #48bb78;
+    --error-color: #f56565;
+    --warning-color: #ed8936;
+    --info-color: #4299e1;
+    --accent-color: #401010;
+}
+
+/* Modo Oscuro */
+
+[data-theme="dark"] {
+    --bg-primary: #401010;
+    --bg-gradient-start: #401010;
+    --bg-gradient-end: #401010;
+    --container-bg: #2d1515;
+    --input-bg: #401010;
+    --input-border: #6a1a1a;
+    --input-focus: #F5F5F5;
+    --btn-bg: #401010;
+    --btn-hover: #6a1a1a;
+    --result-bg: #401010;
+    --result-border: #6a1a1a;
+    --text-primary: #F5F5F5;
+    --text-secondary: #F5F5F5;
+    --header-color: #F5F5F5;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Reset y Estilos Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+}
+
+/* Patrón de fondo animado */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- Botón de Tema --- */
+
+/* --- Contenedor Principal --- */
+.simplifier-container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--container-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Header Section --- */
+.header-section {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: none;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.icon-wrapper i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+h1 {
+    color: var(--header-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+/* --- Controles de Entrada --- */
+.input-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.control-group label {
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-group label i {
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+/* Select personalizado */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.select-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+select {
+    width: 100%;
+    padding: 14px 40px 14px 16px;
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
+    background: var(--input-bg);
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
+    background: var(--input-bg);
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.input-hint {
+    margin-top: 6px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+/* --- Ejemplos Rápidos --- */
+.quick-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 15px;
+    background: var(--result-bg);
+    border-radius: 12px;
+    border: 1px solid var(--result-border);
+}
+
+.examples-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.example-btn {
+    padding: 6px 14px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+
+.example-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.example-btn:active {
+    transform: translateY(0);
+}
+
+/* --- Botón Principal --- */
+.btn {
+    width: 100%;
+    background: var(--btn-bg);
+    border: none;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--shadow-md);
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn:hover {
+    background: var(--btn-hover);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn i {
+    font-size: 1rem;
+}
+
+/* --- Contenedor de Resultado --- */
+#result-container {
+    margin-top: 30px;
+    padding: 25px;
+    background: var(--result-bg);
+    border-radius: 16px;
+    border: 2px solid var(--result-border);
+    text-align: left;
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.8;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s ease;
+    animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#result-container.result-hidden {
+    opacity: 0.7;
+}
+
+.result-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    background: var(--info-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+#result-container.result-success .result-icon {
+    background: var(--success-color);
+}
+
+#result-container.result-error .result-icon {
+    background: var(--error-color);
+}
+
+#result-container p {
+    margin: 10px 0;
+}
+
+.final-expression {
+    font-size: 1.5rem !important;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700 !important;
+    color: var(--accent-color) !important;
+    padding: 20px;
+    background: var(--input-bg);
+    border-radius: 12px;
+    border: 2px dashed var(--accent-color);
+    text-align: center;
+    margin: 15px 0;
+    word-break: break-word;
+    box-shadow: var(--shadow-sm);
+}
+
+.error {
+    color: var(--error-color) !important;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.error::before {
+    content: '⚠';
+    font-size: 1.3rem;
+}
+
+/* --- Footer --- */
+.app-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+.app-footer i {
+    color: #ff6b6b;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 640px) {
+    .simplifier-container {
+        padding: 30px 25px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .icon-wrapper i {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+
+    .final-expression {
+        font-size: 1.2rem !important;
+        padding: 15px;
+    }
+
+    .quick-examples {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .example-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 15px;
+    }
+
+    .theme-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+
+    .simplifier-container {
+        padding: 25px 20px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+}

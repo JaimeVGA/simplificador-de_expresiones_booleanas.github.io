@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplificador Booleano</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+    <div class="simplifier-container">
+        <div class="header-section">
+            <div class="icon-wrapper">
+                <img src="UTM.png" alt="Logo UTM" style="width: 100%; height: 100%; object-fit: contain; border-radius: 20px; border: none; box-shadow: none; background: none;" />
+            </div>
+            <h1>Simplificador Booleano</h1>
+        </div>
+        
+        <div class="input-controls">
+            <div class="control-group">
+                <label for="num-vars">
+                    <i class="fas fa-sliders"></i>
+                    Número de Variables
+                </label>
+                <div class="select-wrapper">
+                    <select id="num-vars">
+                        <option value="1">1 variable</option>
+                        <option value="2">2 variables</option>
+                        <option value="3">3 variables</option>
+                        <option value="4" selected>4 variables</option>
+                        <option value="5">5 variables</option>
+                        <option value="6">6 variables</option>
+                    </select>
+                    <i class="fas fa-chevron-down select-icon"></i>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label for="minterms-input">
+                    <i class="fas fa-calculator"></i>
+                    Minterminos
+                </label>
+                <input type="text" id="minterms-input" placeholder="Ej: 1, 4, 5, 9, 11" autocomplete="off">
+                <small class="input-hint">Separa los números con comas</small>
+            </div>
+        </div>
+
+        <button id="simplify-button" class="btn">
+            <i class="fas fa-play"></i>
+            <span>Simplificar Expresión</span>
+        </button>
+
+        <div id="result-container" class="result-hidden">
+            <div class="result-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <p>Introduce los minterms y presiona "Simplificar".</p>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>Desarrollado por Jaime Fabian Cortes Vega y Cristian Emir Lujan de la Rosa</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
